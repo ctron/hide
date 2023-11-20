@@ -61,6 +61,12 @@ impl<T> From<T> for Hide<T> {
     }
 }
 
+impl From<&str> for Hide<String> {
+    fn from(value: &str) -> Self {
+        Hide(value.to_string())
+    }
+}
+
 impl<T> FromStr for Hide<T>
 where
     T: FromStr,
