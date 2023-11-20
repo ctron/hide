@@ -26,6 +26,9 @@ use std::str::FromStr;
 
 const SUBSTITUTE: &str = "***";
 
+/// Wraps a type and hides it from debug output.
+///
+/// This also works for types which don't implement [`Debug`].
 #[derive(Clone, Hash, Ord, PartialOrd, Eq, PartialEq)]
 pub struct Hide<T>(pub T);
 
