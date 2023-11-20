@@ -6,7 +6,7 @@ authors = ["Jens Reimann <jreimann@redhat.com>"]
 license = "Apache-2.0"
 description = "Hide credentials from debug output"
 repository = "https://github.com/ctron/hide"
-categories = []
+categories = ["config", "development-tools", "value-formatting"]
 keywords = ["credentials", "debug", "hide"]
 readme = "README.md"
 
