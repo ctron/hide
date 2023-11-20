@@ -99,6 +99,12 @@ impl AsRef<str> for Hide<String> {
     }
 }
 
+impl From<Hide<String>> for String {
+    fn from(value: Hide<String>) -> Self {
+        value.0
+    }
+}
+
 #[cfg(test)]
 mod test {
 
