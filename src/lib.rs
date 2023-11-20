@@ -1,4 +1,24 @@
 //! Hide credentials from debug output
+//!
+//! ## Example
+//!
+//! ```rust
+//! use hide::Hide;
+//!
+//! #[derive(Debug)]
+//! pub struct MyStruct {
+//!     username: String,
+//!     password: Hide<String>,
+//! }
+//!
+//! fn example1() {
+//!     let data = MyStruct {
+//!         username: "user".to_string(),
+//!         password: "password".to_string().into(),
+//!     };
+//!     println!("{data:#?}");
+//! }
+//! ```
 
 use std::fmt::{Debug, Display, Formatter};
 use std::ops::{Deref, DerefMut};
