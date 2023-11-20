@@ -2,6 +2,11 @@
 
 Hide secrets from logs.
 
+## Seriously?
+
+You might ask: "A crate, for a simple feature like this?". Yes, maybe this type will be shared between crates. Compared
+to multiple different types in different crates.
+
 ## Add to your project
 
 ```tom
