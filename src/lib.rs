@@ -32,6 +32,16 @@ const SUBSTITUTE: &str = "***";
 #[derive(Clone, Hash, Ord, PartialOrd, Eq, PartialEq)]
 pub struct Hide<T>(pub T);
 
+impl<T> Hide<T> {
+    pub fn new(value: T) -> Self {
+        Self(value)
+    }
+
+    pub fn take(self) -> T {
+        self.0
+    }
+}
+
 impl<T> Deref for Hide<T> {
     type Target = T;
 
@@ -110,6 +120,7 @@ mod test {
 
     use super::*;
 
+    #[allow(dead_code)]
     #[derive(Debug)]
     struct Example {
         username: String,
@@ -128,6 +139,28 @@ mod test {
             r#"Example {
     username: "foo",
     password: ***,
+}"#
+        );
+    }
+
+    /// Data which misses a bunch of traits
+    struct NoTraitData;
+
+    #[allow(dead_code)]
+    #[derive(Debug)]
+    struct ExampleNoTraitData {
+        ntd: Hide<NoTraitData>,
+    }
+
+    #[test]
+    fn test_ntr() {
+        let ex = ExampleNoTraitData {
+            ntd: NoTraitData.into(),
+        };
+        assert_eq!(
+            format!("{ex:#?}"),
+            r#"ExampleNoTraitData {
+    ntd: ***,
 }"#
         );
     }
