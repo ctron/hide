@@ -1,4 +1,7 @@
-# hide
+# hide (from debug)
+
+[![crates.io](https://img.shields.io/crates/v/hide.svg)](https://crates.io/crates/hide)
+[![docs.rs](https://docs.rs/hide/badge.svg)](https://docs.rs/hide)
 
 Hide secrets from logs.
 
