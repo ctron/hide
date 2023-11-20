@@ -26,6 +26,7 @@ use std::str::FromStr;
 
 const SUBSTITUTE: &str = "***";
 
+#[derive(Clone, Hash, Ord, PartialOrd, Eq, PartialEq)]
 pub struct Hide<T>(pub T);
 
 impl<T> Deref for Hide<T> {
