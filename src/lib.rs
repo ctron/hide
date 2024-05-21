@@ -115,10 +115,36 @@ impl From<Hide<String>> for String {
     }
 }
 
+#[cfg(feature = "serde")]
+impl<T> serde::Serialize for Hide<T>
+where
+    T: serde::Serialize,
+{
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        self.0.serialize(serializer)
+    }
+}
+
+#[cfg(feature = "serde")]
+impl<'de, T> serde::Deserialize<'de> for Hide<T>
+where
+    T: serde::Deserialize<'de>,
+{
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        Ok(Self(T::deserialize(deserializer)?))
+    }
+}
+
 #[cfg(test)]
 mod test {
-
     use super::*;
+    use serde_json::json;
 
     #[allow(dead_code)]
     #[derive(Debug)]
@@ -162,6 +188,27 @@ mod test {
             r#"ExampleNoTraitData {
     ntd: ***,
 }"#
+        );
+    }
+
+    #[test]
+    fn test_serde() {
+        #[allow(dead_code)]
+        #[derive(Debug, serde::Deserialize, serde::Serialize)]
+        struct ExampleSerde {
+            username: String,
+            password: Hide<String>,
+        }
+        assert_eq!(
+            serde_json::to_value(ExampleSerde {
+                username: "foo".into(),
+                password: "bar".into(),
+            })
+            .unwrap(),
+            json!({
+                "username": "foo",
+                "password": "bar",
+            })
         );
     }
 }
