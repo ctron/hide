@@ -141,6 +141,28 @@ where
     }
 }
 
+#[cfg(feature = "schemars")]
+impl<T> schemars::JsonSchema for Hide<T>
+where
+    T: schemars::JsonSchema,
+{
+    fn is_referenceable() -> bool {
+        T::is_referenceable()
+    }
+
+    fn schema_name() -> String {
+        T::schema_name()
+    }
+
+    fn schema_id() -> std::borrow::Cow<'static, str> {
+        T::schema_id()
+    }
+
+    fn json_schema(gen: &mut schemars::gen::SchemaGenerator) -> schemars::schema::Schema {
+        T::json_schema(gen)
+    }
+}
+
 #[cfg(test)]
 mod test {
     use super::*;
